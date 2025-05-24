@@ -1,9 +1,12 @@
 import { useState } from "react";
-import DeleteGenderForm from "../../forms/DeleteGenderForm"
-import MainLayout from "../../layout/MainLayout";
-import AlertMessage from "../../tables/AlertMessage";
+import AlertMessage from "../../components/AlertMessage";
+import AddGenderForm from "../../components/forms/gender/AddGenderForm";
+import GendersTable from "../../components/tables/gender/GendersTable";
+import MainLayout from "../layout/MainLayout";
 
-const DeleteGender = () => {
+const Genders = () => {
+  const [refreshGenders, setRefreshGenders] = useState(false);
+
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -32,13 +35,17 @@ const DeleteGender = () => {
         isVisible={isVisible}
         onClose={handleCloseAlertMessage}
       />
-      <div className="d-flex justify-content-center">
+      <div className="row">
         <div className="col-md-3">
-          <DeleteGenderForm
-            onDeleteGender={(message) =>
-              handleShowAlertMessage(message, true, true)
-            }
+          <AddGenderForm
+            onGenderAdded={(message) => {
+              handleShowAlertMessage(message, true, true);
+              setRefreshGenders(!refreshGenders);
+            }}
           />
+        </div>
+        <div className="col-md-9">
+          <GendersTable refreshGenders={refreshGenders} />
         </div>
       </div>
     </>
@@ -47,4 +54,4 @@ const DeleteGender = () => {
   return <MainLayout content={content} />;
 };
 
-export default DeleteGender
+export default Genders;

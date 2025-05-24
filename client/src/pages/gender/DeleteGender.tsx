@@ -1,7 +1,7 @@
 import { useState } from "react";
-import DeleteGenderForm from "../../forms/DeleteGenderForm"
-import MainLayout from "../../layout/MainLayout";
-import AlertMessage from "../../tables/AlertMessage";
+import AlertMessage from "../../components/AlertMessage";
+import DeleteGenderForm from "../../components/forms/gender/DeleteGenderForm";
+import MainLayout from "../layout/MainLayout";
 
 const DeleteGender = () => {
   const [message, setMessage] = useState("");
@@ -47,4 +47,4 @@ const DeleteGender = () => {
   return <MainLayout content={content} />;
 };
 
-export default DeleteGender
+export default DeleteGender;

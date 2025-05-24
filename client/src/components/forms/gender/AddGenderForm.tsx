@@ -1,10 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-
-import GenderFieldErrors from "../interfaces/GenderFieldErrors";
-import SpinnerSmall from "../SpinnerSmall";
-import ErrorHandler from "../../handler/ErrorHandler";
-import GenderService from "../../services/GenderService";
-
+import GenderService from "../../../services/GenderService";
+import { GenderFieldErrors } from "../../../interfaces/GenderFieldErrors";
+import SpinnerSmall from "../../SpinnerSmall";
 
 interface AddGenderFormProps {
   onGenderAdded: (message: string) => void;
@@ -25,7 +22,7 @@ const AddGenderForm = ({ onGenderAdded }: AddGenderFormProps) => {
     }));
   };
 
-  const handleStoreGender = (e: FormEvent) => {
+  const handleStoreGender = async (e: FormEvent) => {
     e.preventDefault();
 
     setState((prevState) => ({
@@ -33,39 +30,41 @@ const AddGenderForm = ({ onGenderAdded }: AddGenderFormProps) => {
       loadingStore: true,
     }));
 
-    GenderService.storeGender(state)
-      .then((res) => {
-        if (res.status === 200) {
-          setState((prevState) => ({
-            ...prevState,
-            gender: "",
-            errors: {} as GenderFieldErrors,
-          }));
+    try {
+      const res = await GenderService.storeGender(state);
 
-          onGenderAdded(res.data.message);
-        } else {
-          console.error(
-            "Unexpected status error during storing gender: ",
-            res.status
-          );
-        }
-      })
-      .catch((error) => {
-        if (error.response.status === 422) {
-          setState((prevState) => ({
-            ...prevState,
-            errors: error.response.data.errors,
-          }));
-        } else {
-          ErrorHandler(error, null);
-        }
-      })
-      .finally(() => {
+      if (res.status === 200) {
         setState((prevState) => ({
           ...prevState,
-          loadingStore: false,
+          gender: "",
+          errors: {} as GenderFieldErrors,
         }));
-      });
+
+        onGenderAdded(res.data.message);
+      } else {
+        console.error(
+          "Unexpected status error occured during store gender: ",
+          res.status
+        );
+      }
+    } catch (error: any) {
+      if (error.response.status === 422) {
+        setState((prevState) => ({
+          ...prevState,
+          errors: error.response.data.errors,
+        }));
+      } else {
+        console.error(
+          "Unexpected server error occured during store gender: ",
+          error
+        );
+      }
+    } finally {
+      setState((prevState) => ({
+        ...prevState,
+        loadingStore: false,
+      }));
+    }
   };
 
   return (

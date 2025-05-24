@@ -1,9 +1,9 @@
 import { useState } from "react";
-import DeleteGenderForm from "../../forms/DeleteGenderForm"
-import MainLayout from "../../layout/MainLayout";
-import AlertMessage from "../../tables/AlertMessage";
+import AlertMessage from "../../components/AlertMessage";
+import EditGenderForm from "../../components/forms/gender/EditGenderForm";
+import MainLayout from "../layout/MainLayout";
 
-const DeleteGender = () => {
+const EditGender = () => {
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -34,10 +34,10 @@ const DeleteGender = () => {
       />
       <div className="d-flex justify-content-center">
         <div className="col-md-3">
-          <DeleteGenderForm
-            onDeleteGender={(message) =>
-              handleShowAlertMessage(message, true, true)
-            }
+          <EditGenderForm
+            onGenderUpdate={(message) => {
+              handleShowAlertMessage(message, true, true);
+            }}
           />
         </div>
       </div>
@@ -47,4 +47,4 @@ const DeleteGender = () => {
   return <MainLayout content={content} />;
 };
 
-export default DeleteGender
+export default EditGender;

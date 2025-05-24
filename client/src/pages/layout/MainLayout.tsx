@@ -1,5 +1,4 @@
-import Navbar from "../Navbar";
-
+import Navbar from "../../components/Navbar";
 
 interface MainLayoutProps {
   content: React.ReactNode;
@@ -10,7 +9,7 @@ const MainLayout = ({ content }: MainLayoutProps) => {
     <>
       <div className="container-fluid">
         <Navbar />
-        <div className="row">{content}</div>
+        <div>{content}</div>
       </div>
     </>
   );

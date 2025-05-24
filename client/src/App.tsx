@@ -1,21 +1,48 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Gender from "./components/pages/genders/Gender";
-import EditGender from "./components/pages/genders/EditGender";
-import DeleteGender from "./components/pages/genders/DeleteGender";
+import Genders from "./pages/gender/Genders";
+import EditGender from "./pages/gender/EditGender";
+import DeleteGender from "./pages/gender/DeleteGender";
+import Users from "./pages/user/Users";
+import Login from "./pages/login/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Gender />,
+    element: <Login />,
   },
   {
-    path:"/gender/edit",
-    element: <EditGender/>
+    path: "/genders",
+    element: (
+      <ProtectedRoute>
+        <Genders />
+      </ProtectedRoute>
+    ),
   },
   {
-    path:"/gender/delete",
-    element: <DeleteGender/>
-  }
+    path: "/gender/edit/:gender_id",
+    element: (
+      <ProtectedRoute>
+        <EditGender />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/gender/delete/:gender_id",
+    element: (
+      <ProtectedRoute>
+        <DeleteGender />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/users",
+    element: (
+      <ProtectedRoute>
+        <Users />
+      </ProtectedRoute>
+    ),
+  },
 ]);
 
 const App = () => {

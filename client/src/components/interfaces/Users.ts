@@ -7,6 +7,8 @@ interface Users{
     last_name: string;
     suffix_name?: string;
     age: number;
+    birth_date: string;
+    gender: Genders;
     gender_id: Genders;
     address: string;
     contact_number: string;

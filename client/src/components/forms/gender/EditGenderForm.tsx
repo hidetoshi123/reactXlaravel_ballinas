@@ -1,10 +1,10 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import SpinnerSmall from "../SpinnerSmall";
-import Spinner from "../Spinner";
-import GenderFieldErrors from "../interfaces/GenderFieldErrors";
-import GenderService from "../../services/GenderService";
-import ErrorHandler from "../../handler/ErrorHandler";
+import GenderService from "../../../services/GenderService";
+import ErrorHandler from "../../../handler/ErrorHandler";
+import Spinner from "../../Spinner";
+import { GenderFieldErrors } from "../../../interfaces/GenderFieldErrors";
+import SpinnerSmall from "../../SpinnerSmall";
 
 interface EditGenderFormProps {
   onGenderUpdate: (message: string) => void;
@@ -138,7 +138,7 @@ const EditGenderForm = ({ onGenderUpdate }: EditGenderFormProps) => {
               )}
             </div>
             <div className="d-flex justify-content-end">
-              <Link to={"/"} className="btn btn-secondary me-1">
+              <Link to={"/genders"} className="btn btn-secondary me-1">
                 Back
               </Link>
               <button
@@ -162,4 +162,4 @@ const EditGenderForm = ({ onGenderUpdate }: EditGenderFormProps) => {
   );
 };
 
-export default EditGenderForm
+export default EditGenderForm;
